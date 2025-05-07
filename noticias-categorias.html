@@ -69,5 +69,53 @@
         <p>Fuente de datos: RSS Feeds de medios reconocidos | Actualización cada vez que se recarga o se presiona el botón.</p>
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rss-parser/3.12.0/rss-parser.min.js"></script>
+    <script>
+        const categories = {
+            "Economía Argentina": ["https://www.cronista.com/rss/economia.xml", "https://www.lanacion.com.ar/economia/rss.xml"],
+            "Política Argentina": ["https://www.cronista.com/rss/politica.xml", "https://www.lanacion.com.ar/politica/rss.xml"],
+            "Geopolítica": ["https://elordenmundial.com/feed/"],
+            "Tecnología": ["https://es.wired.com/info/rss-feeds"],
+            "Descubrimientos": ["https://rss.app/feeds/L4YZ3Z7Qj8TJhv3e.xml"],
+            "Clima": ["https://www.aemet.es/en/rss_info"],
+            "Armamentística": ["https://rss.feedspot.com/military_rss_feeds/"],
+            "Guerra": ["https://news.un.org/feed/subscribe/es/news/topic/peace-and-security/feed/rss.xml"],
+            "Avances contra el envejecimiento": ["https://rss.app/feeds/c3S3LZ0MPdXgkFQw.xml"]
+        };
+
+        async function loadNews() {
+            const container = document.getElementById('news-container');
+            container.innerHTML = '';
+
+            for (const [category, feeds] of Object.entries(categories)) {
+                let newsHTML = `<section class="category"><h2>${category}</h2><div class="news-container">`;
+
+                for (const feed of feeds) {
+                    try {
+                        const response = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(feed)}`);
+                        const textData = await response.text();
+                        const parser = new DOMParser();
+                        const xml = parser.parseFromString(textData, "text/xml");
+                        const items = xml.querySelectorAll("item");
+                        if (items.length === 0) {
+                            newsHTML += `<div class="news-card">No hay noticias disponibles en este momento.</div>`;
+                        }
+                        items.forEach(item => {
+                            const title = item.querySelector("title").textContent;
+                            const link = item.querySelector("link").textContent;
+                            newsHTML += `<div class="news-card"><a href="${link}" target="_blank">${title}</a></div>`;
+                        });
+                    } catch (error) {
+                        newsHTML += `<div class="news-card">Error al cargar noticias: ${error.message}</div>`;
+                        console.error("Error al cargar RSS:", error);
+                    }
+                }
+
+                newsHTML += '</div></section>';
+                container.innerHTML += newsHTML;
+            }
+        }
+
+        window.addEventListener('load', loadNews);
+    </script>
 </body>
 </html>
