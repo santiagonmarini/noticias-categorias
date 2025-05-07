@@ -92,7 +92,7 @@
                 for (const feed of feeds) {
                     try {
                         console.log(`Cargando noticias de: ${feed}`);
-                        const response = await fetch(`https://cors-anywhere.herokuapp.com/${feed}`);
+                        const response = await fetch(`https://api.allorigins.win/raw?url=${feed}`);
                         const textData = await response.text();
                         const parser = new DOMParser();
                         const xml = parser.parseFromString(textData, "text/xml");
