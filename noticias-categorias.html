@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticias en Español - Actualización en Tiempo Real</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f7f7f7;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+        button {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .category {
+            margin-bottom: 2rem;
+            padding: 1rem;
+        }
+        .category h2 {
+            margin-bottom: 0.5rem;
+        }
+        .news-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 0.5rem;
+            background-color: white;
+        }
+        .news-card {
+            padding: 0.5rem;
+            border-bottom: 1px solid #ccc;
+        }
+        .news-card a {
+            text-decoration: none;
+            color: #007acc;
+        }
+        .news-card a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #333;
+            color: white;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📰 Noticias en Español - Actualización en Tiempo Real</h1>
+        <button onclick="loadNews()">🔄 Actualizar noticias</button>
+    </header>
+    <main id="news-container"></main>
+    <footer>
+        <p>Fuente de datos: RSS Feeds de medios reconocidos | Actualización cada vez que se recarga o se presiona el botón.</p>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rss-parser/3.12.0/rss-parser.min.js"></script>
+</body>
+</html>
